@@ -5,11 +5,12 @@ import {StackActions} from '@react-navigation/native';
 
 function EPASplashScreen({navigation}) {
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(async () => {
       //For checking user authh state
-      Auth().onAuthStateChanged(user => {
+      const unSubscribe = await Auth().onAuthStateChanged(user => {
         const routeName = user !== null ? 'Home' : 'SignIn';
         // navigation.navigate(routeName);
+        unSubscribe(); //For solving stuck issue of splashscreen
         navigation.dispatch(StackActions.replace(routeName));
       });
     }, 3000);

@@ -63,7 +63,16 @@ const EPASignUp = ({navigation}) => {
           inputs.password,
         );
 
-        console.log('Created User => ', isUserCreated);
+        // console.log('Created User => ', isUserCreated);
+        //For sending email verification link
+        await auth().currentUser.sendEmailVerification();
+        //For signning out before verifying email
+        await auth().signOut();
+
+        alert(
+          'Please verify your email by checking out verification mail in yourn inbox',
+        );
+
         if (isUserCreated) {
           navigation.navigate('SignIn');
         }

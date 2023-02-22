@@ -11,14 +11,13 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import database from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth';
-import {StackActions} from '@react-navigation/native';
+// import database from '@react-native-firebase/database';
+// import auth from '@react-native-firebase/auth';
 
 //For getting screens height and width
 const {height, width} = Dimensions.get('screen');
 
-const EPASignIn = ({navigation}) => {
+const FirestoreSignUp = ({navigation}) => {
   //For storing inputs
   const [inputs, setInputs] = useState({
     email: null,
@@ -34,8 +33,8 @@ const EPASignIn = ({navigation}) => {
   const emailRef = createRef();
   const passwordRef = createRef();
 
-  //For handling Sign In
-  const handleSignIn = async () => {
+  //For handling sign up
+  const handleSignUp = async () => {
     try {
       let emailErr = validateField(inputs.email);
       let passwordErr = validateField(inputs.password);
@@ -48,23 +47,9 @@ const EPASignIn = ({navigation}) => {
         };
       });
 
-      if (inputs.email && inputs.password) {
-        // console.log('Email : ', inputs.email);
-        // console.log('Password : ', inputs.password);
-        const user = await auth().signInWithEmailAndPassword(
-          inputs.email,
-          inputs.password,
-        );
-        console.log('user : ', user);
-        if (user.user.emailVerified) {
-          //   navigation.navigate('Home');
-          navigation.dispatch(StackActions.replace('Home'));
-          alert('Your email is verified!');
-        } else {
-          alert('Please verify your email');
-          await auth().currentUser.sendEmailVerification();
-          await auth().signOut();
-        }
+      if (!emailErr && !passwordErr) {
+        console.log('Email :--> ', inputs.email);
+        console.log('Password :--> ', inputs.password);
         setInputs(prevInputs => {
           return {
             ...prevInputs,
@@ -72,10 +57,29 @@ const EPASignIn = ({navigation}) => {
             password: null,
           };
         });
+
+        // const isUserCreated = await auth().createUserWithEmailAndPassword(
+        //   inputs.email,
+        //   inputs.password,
+        // );
+
+        // // console.log('Created User => ', isUserCreated);
+        // //For sending email verification link
+        // await auth().currentUser.sendEmailVerification();
+        // //For signning out before verifying email
+        // await auth().signOut();
+
+        // alert(
+        //   'Please verify your email by checking out verification mail in yourn inbox',
+        // );
+
+        // if (isUserCreated) {
+        //   navigation.navigate('SignIn');
+        // }
       }
     } catch (err) {
-      console.log('Error in Sign In with firebase ', err);
-      alert(err.message);
+      console.log('Error in sign up with firebase firestore ', err);
+      //   alert(err.message);
     }
   };
 
@@ -88,7 +92,7 @@ const EPASignIn = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.rootContainer}>
-          <Text style={styles.heading}>Sign In</Text>
+          <Text style={styles.heading}>Sign Up With Fire Store</Text>
           <KeyboardAvoidingView enabled>
             <TextInput
               value={inputs.email}
@@ -143,13 +147,13 @@ const EPASignIn = ({navigation}) => {
               secureTextEntry={true}
             />
             <Text style={styles.error}>{error.passwordError}</Text>
-            <TouchableOpacity style={styles.buttonStyle} onPress={handleSignIn}>
-              <Text style={styles.buttonText}>Sign In</Text>
+            <TouchableOpacity style={styles.buttonStyle} onPress={handleSignUp}>
+              <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.signup}
-              onPress={() => navigation.navigate('SignUp')}>
-              <Text style={styles.signupText}>New User? Sign up here </Text>
+            <TouchableOpacity style={styles.signin} onPress={() => {}}>
+              <Text style={styles.signinText}>
+                Already Have Account? Sign In here{' '}
+              </Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </View>
@@ -158,7 +162,7 @@ const EPASignIn = ({navigation}) => {
   );
 };
 
-export default EPASignIn;
+export default FirestoreSignUp;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
@@ -202,11 +206,11 @@ const styles = StyleSheet.create({
     color: '#f00',
     fontSize: 15,
   },
-  signup: {
+  signin: {
     margin: 10,
     alignItems: 'center',
   },
-  signupText: {
+  signinText: {
     color: '#00f',
     fontSize: 15,
     fontWeight: 'bold',

@@ -5,6 +5,7 @@ import EPASplashScreen from './src/screens/EPASplashScreen';
 import EPASignIn from './src/screens/EPASignIn';
 import EPASignUp from './src/screens/EPASignUp';
 import EPAHome from './src/screens/EPAHome';
+import FirestoreSignUp from './src/screens/FirestoreSignUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SplashScreen"
           component={EPASplashScreen}
           options={{headerShown: false}}
@@ -30,6 +31,11 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={EPAHome}
+          options={{headerShown: false}}
+        /> */}
+        <Stack.Screen
+          name="FirestoreSignUp"
+          component={FirestoreSignUp}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
