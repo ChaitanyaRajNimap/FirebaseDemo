@@ -28,6 +28,13 @@ const EPAHome = ({navigation}) => {
       {/* <Text style={styles.heading}>Home Screen</Text> */}
       <Text style={styles.heading}>Hello {email}!</Text>
       <TouchableOpacity
+        style={[styles.buttonStyle, {backgroundColor: '#00f'}]}
+        onPress={() => {
+          navigation.navigate('ImageUpload');
+        }}>
+        <Text style={styles.buttonText}>Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
         style={styles.buttonStyle}
         onPress={async () => {
           console.log('Reached');

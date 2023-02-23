@@ -7,6 +7,7 @@ import EPASignUp from './src/screens/EPASignUp';
 import EPAHome from './src/screens/EPAHome';
 import FirestoreSignUp from './src/screens/FirestoreSignUp';
 import EPAMobileVerify from './src/screens/EPAMobileVerify';
+import ImageUpload from './src/screens/ImageUpload';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,12 +15,12 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="MobileVerify"
           component={EPAMobileVerify}
           options={{headerShown: false}}
-        />
-        {/* <Stack.Screen
+        /> */}
+        <Stack.Screen
           name="SplashScreen"
           component={EPASplashScreen}
           options={{headerShown: false}}
@@ -38,7 +39,12 @@ const App = () => {
           name="Home"
           component={EPAHome}
           options={{headerShown: false}}
-        /> */}
+        />
+        <Stack.Screen
+          name="ImageUpload"
+          component={ImageUpload}
+          options={{headerShown: false}}
+        />
         {/* <Stack.Screen
           name="FirestoreSignUp"
           component={FirestoreSignUp}
